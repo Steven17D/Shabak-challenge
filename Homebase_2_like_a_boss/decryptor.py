@@ -19,7 +19,7 @@ def apply_operation(operation, parameter):
     assert apply_operation.data is not None
 
     original_value = apply_operation.data[apply_operation.position]
-    apply_operation.data[apply_operation.position] = abs(operation(original_value, parameter))%256
+    apply_operation.data[apply_operation.position] = abs(operation(original_value, parameter)) % 256
 
     if apply_operation.position + apply_operation.direction == len(apply_operation.data) \
             or apply_operation.position + apply_operation.direction == -1:
@@ -32,7 +32,6 @@ def main():
     key = []
     apply_operation.position = 0
     apply_operation.direction = 1
-    # apply_operation.is_zero_next_time = False
     with open('Key.bin', 'rb') as key_file:
         key_data = binascii.hexlify(key_file.read())
         struct_size = (8 + 8 + 32) / 4
@@ -60,7 +59,7 @@ def main():
             operation = operator.sub
 
         [apply_operation(operation, step.operationParameter) for _ in xrange(step.lengthToOperateOn)]
-    print "Output:\n", ''.join(map(lambda x: chr(abs(x) % 256), apply_operation.data))
+    print "Output:\n", ''.join(map(lambda x: chr(x), apply_operation.data))
 
 
 if __name__ == '__main__':
